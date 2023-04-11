@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: About
+// MARK: - About
 // This file presents switching between different layouts functionality.
 
 struct ExampleView: View {

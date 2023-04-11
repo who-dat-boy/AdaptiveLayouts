@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: About
+// MARK: - About
 // This file presents a horizontal layout where you can specify view available width by hand with '.layoutPriority(Int)'.
 
 struct RelativeHStack: Layout {

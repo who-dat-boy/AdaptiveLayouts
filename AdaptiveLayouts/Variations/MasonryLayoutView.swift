@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: About
+// MARK: - About
 // This file presents a masonry layout where views are shown in a unique order. The same functionality can be seen in Pinterest app.
 
 struct MasonryLayout: Layout {

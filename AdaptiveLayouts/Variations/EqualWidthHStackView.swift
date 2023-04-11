@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: About
+// MARK: - About
 // This file presents a layout where all views in a HStack have the same available width.
 
 struct EqualWidthHStack: Layout {

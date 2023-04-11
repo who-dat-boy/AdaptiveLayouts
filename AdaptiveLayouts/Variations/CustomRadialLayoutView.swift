@@ -7,17 +7,25 @@
 
 import SwiftUI
 
-// MARK: About
+// MARK: - About
 // This file presents a custom radial layout. With that functionality you can put any views in a circle stack.
+// MARK: Please, don't forget to try the 'Expand' button at the bottom.
 
 struct RadialLayout: Layout {
+    var rollOut = 0.0
+    
+    var animatableData: Double {
+        get { rollOut }
+        set { rollOut = newValue }
+    }
+    
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
         proposal.replacingUnspecifiedDimensions()
     }
     
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
         let radius = min(bounds.size.width, bounds.size.height) / 2
-        let angle = Angle.degrees(360 / Double(subviews.count)).radians
+        let angle = Angle.degrees(360 / Double(subviews.count)).radians * rollOut
         
         for (index, subview) in subviews.enumerated() {
             let viewSize = subview.sizeThatFits(.unspecified)
@@ -33,9 +41,10 @@ struct RadialLayout: Layout {
 
 struct CustomRadialLayoutView: View {
     @State private var count = 16
+    @State private var isExpanded = false
     
     var body: some View {
-        RadialLayout {
+        RadialLayout(rollOut: isExpanded ? 1 : 0) {
             ForEach(0..<count, id: \.self) { _ in
                 Circle()
                     .frame(width: 32, height: 32)
@@ -43,8 +52,16 @@ struct CustomRadialLayoutView: View {
         }
         .padding()
         .safeAreaInset(edge: .bottom) {
-            Stepper("Count: \(count)", value: $count.animation(), in: 0...36)
-                .padding()
+            VStack {
+                Stepper("Count: \(count)", value: $count.animation(), in: 0...36)
+                    .padding()
+                Button("Expand") {
+                    withAnimation(.easeInOut(duration: 1)) {
+                        isExpanded.toggle()
+                    }
+                }
+                .fontWeight(.bold)
+            }
         }
     }
 }
